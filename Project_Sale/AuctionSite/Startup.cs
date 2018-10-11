@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AuctionSite.Models;
 
-namespace WebApplication1
+namespace AuctionSite
 {
     public class Startup
     {

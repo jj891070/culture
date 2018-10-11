@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AuctionSite.Models;
 
-namespace WebApplication1.Controllers
+namespace AuctionSite.Controllers
 {
     public class HomeController : Controller
     {
