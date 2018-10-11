@@ -1,0 +1,67 @@
+version: '3'
+services:
+
+    # 專案開發
+    culture-dev:
+        image: jj891070/microsoft-asp-sdk
+        restart: always
+        ports:
+            - "8078:80"
+        volumes:
+            - .:/var/www/jay
+        tty: true
+        networks:
+            - internal_network
+
+    # Database
+    mysql:
+        image: mysql:5.7
+        restart: always
+        tty: true
+        ports:
+            - "3309:3306"
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+        environment:
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: qwe123
+            MYSQL_DATABASE: test
+        networks:
+            - internal_network
+
+    redis:
+        image: redis
+        restart: always
+        tty: true
+        volumes:
+            - ./data/cache:/data
+        networks:
+            - internal_network
+
+    # Database GUI
+    adminer:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        ports:
+            - "3307:80"
+        environment:
+            - PMA_HOST=mysql
+        networks:
+            - internal_network
+
+    redis-admin:
+        image: jj891070/apache2-phpredisadmin
+        restart: always
+        tty: true
+        ports:
+            - "3200:80"
+        environment:
+            - JAY_REDIS_HOSTS=redis
+        depends_on:
+            - redis
+        networks:
+            - internal_network
+
+networks:
+    internal_network:
+        driver: bridge
